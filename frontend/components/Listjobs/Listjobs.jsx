@@ -260,13 +260,20 @@ export default function Listjobs() {
             );
           })
         ) : (
-          <Alert status="warning">
+          <Flex
+          height="100%"
+          width="100%"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Alert w="auto" status="warning">
             <AlertIcon />
-            There are no jobs on our Dapp.
+            There is no jobs on our Dapp.
             <Link fontWeight="extrabold" href="/addajob">
               Create the first job:
             </Link>
           </Alert>
+          </Flex>
         )}
       </Flex>
     </Flex>
