@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Jobs.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity 0.8.17;\n\n///@title A mini Job Smart Contracty\n///@author Mavinigi\n\ncontract Jobs {\n\n    struct Job {\n        address author;\n        address worker;\n        string description;\n        uint price;\n        bool isFinished;\n    }\n\n    Job[] jobs;\n\n    event jobAdded(address indexed author, string description, uint price, uint id, bool isFinished);\n    event jobTaken(address indexed worker, uint id);\n    event jobIsFinishedAndPaid(address indexed author, address indexed worker, uint id, uint pricePaid);\n\n    ///@notice Allows to add a new job \n    ///@param _description the complete description of the job\n    function addJob(\n        string calldata _description\n    ) external payable {\n        require(msg.value>0, \"price input is mandatory and should be positive\");\n        //require(bytes(_description).length>5, \"at least 5 letters you lazy bastard\");\n        require(jobs.length<1000, \"1000 max to avoid ddos\");\n        Job memory newjob = Job(msg.sender, address(0), _description, msg.value, false);\n        jobs.push(newjob);\n        emit jobAdded(msg.sender, _description, msg.value, jobs.length-1, false);\n    }\n\n    ///@notice Allows to take the job\n    ///@param _id the index of the job in the jobs array\n    function takeJob(uint _id) external {\n        require(jobs.length >= _id , \"no job with this id\");\n        require(msg.sender != jobs[_id].author, \"author cannot take its own job\");\n        require(jobs[_id].worker == address(0), \"job already taken\");\n        jobs[_id].worker = msg.sender;\n        emit jobTaken(msg.sender, _id);\n    }\n\n    ///@notice Allows to end the job and to pay the worker\n    ///@param _id the id of the job in the jobs array\n    function setIsFinishedAndPay(uint _id) external {\n        require(jobs[_id].worker != address(0), \"job not taken by a worker\");\n        require(msg.sender == jobs[_id].author, \"only the author can close and pay\");\n        (bool paid, ) = jobs[_id].worker.call{value : jobs[_id].price}('');\n        if (!paid) {\n            revert(\"The worker has not been paid, transaction has been reverted\");\n        } else {\n            jobs[_id].isFinished = true;\n            emit jobIsFinishedAndPaid(jobs[_id].author, jobs[_id].worker, _id, jobs[_id].price);\n        }\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
