@@ -1,38 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FullStack-MiniJob-DApp-hardhatdeploy-hardhat-wagmi-rainbowkit-events-nextjs
 
-## Getting Started
+## Mini Job Dapp
 
-First, run the development server:
+L’objectif est de créer une Dapp sur laquelle chacun sera libre de demander de l’aide, aider quelqu’un ou être aidé, et enfin, payer quelqu’un pour l’aide apportée ou être payé pour l’aide apportée.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+**Premièrement, l’utilisateur pourra créer un job :**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![alt text](https://github.com/vigimani/Minijob_Dapp/blob/main/addajob.png)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+**Au niveau de l’UI, il y aura deux champs importants : **
+- un champs description du job
+- un champs où l’utilisateur qui veut être aidé (qui créer le job) précise quel montant il donnera à la personne qui va l’aider (en ETH)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Au niveau technique, l’utilisateur qui créé le job donnera la « récompense » directement au smart contract. Lorsque la personne qui réservera le job aura terminé, l’utilisateur qui a créé le job déclenchera une fonction qui permettra de payer automatiquement le « travailleur ».
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+**Plusieurs informations seront indispensables dans le smart contract pour chaque job : **
+- id
+- auteur
+- travailleur
+- description
+- prix
+- si le job est terminé
+- si le job est réservé
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Au niveau de la liste des jobs**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![alt text](https://github.com/vigimani/Minijob_Dapp/blob/main/home.png)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
